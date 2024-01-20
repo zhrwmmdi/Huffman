@@ -5,7 +5,7 @@ public class Main {
         FileReader reader = new FileReader();
         reader.readFile("text.txt");
 
-        CharacterMap huffman = new CharacterMap();
+        HuffmanCoding huffman = new HuffmanCoding();
 
     }
 }

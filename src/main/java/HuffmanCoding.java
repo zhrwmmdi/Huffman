@@ -1,8 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PriorityQueue;
 
-public class CharacterMap {
+public class HuffmanCoding {
     private final Map<Character, Integer> charMap = new HashMap<>();
     private void fillMap(String data){
         for (char c:data.toCharArray()){
