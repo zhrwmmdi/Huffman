@@ -1,13 +1,10 @@
 package data_handler;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class FileReader {
     private static String stringData;
-    private final Map<Character, Integer> charactersMap = new HashMap<>();
     public void readFile(String path){
         File file = new File(path);
         try {
