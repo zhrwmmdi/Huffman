@@ -13,7 +13,7 @@ public class FileReader {
                 stringData = stringData.concat(reader.next());
             }
         }catch (Exception ex){
-            System.err.println("ERROR in readFile() method of FileReader class: "+ex.getMessage());
+            System.err.println("ERROR in readFile() method of data_handler.FileReader class: "+ex.getMessage());
         }
     }
 
