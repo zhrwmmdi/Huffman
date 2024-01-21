@@ -2,15 +2,14 @@ package structure;
 
 public class Node {
     private final int frequency;
-    private final char character;
+    private char character;
     Node left;
     Node right;
     public Node(char character, int frequency){
         this.frequency = frequency;
         this.character = character;
     }
-    public Node(char character, int frequency, Node left, Node right){
-        this.character = character;
+    public Node(int frequency, Node left, Node right){
         this.frequency = frequency;
         this.left = left;
         this.right = right;
@@ -22,5 +21,11 @@ public class Node {
 
     public char getCharacter() {
         return character;
+    }
+    public Node left(){
+        return left;
+    }
+    public Node right(){
+        return right;
     }
 }
