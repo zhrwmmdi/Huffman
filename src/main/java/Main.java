@@ -6,6 +6,6 @@ public class Main {
         reader.readFile("text.txt");
 
         HuffmanCoding huffman = new HuffmanCoding();
-
+        huffman.encode(FileReader.getStringData());
     }
 }
