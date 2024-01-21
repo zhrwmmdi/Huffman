@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Scanner;
 
 public class FileReader {
-    private static String stringData;
+    private static String stringData = "";
     public void readFile(String path){
         File file = new File(path);
         try {
