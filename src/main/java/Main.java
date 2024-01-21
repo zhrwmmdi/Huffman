@@ -1,3 +1,4 @@
+import data_handler.Browser;
 import data_handler.FileReader;
 public class Main {
     public static void main(String[] args){
