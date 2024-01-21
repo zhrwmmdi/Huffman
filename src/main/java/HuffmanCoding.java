@@ -18,7 +18,7 @@ public class HuffmanCoding {
         StringBuilder result = produceEncodedString();
         System.out.println("Encoded text: "+result);
     }
-    public Node createHuffmanTree(String data){
+    private Node createHuffmanTree(String data){
         fillMap(data);
         //used to create and then return a 'set' of the same elements that are already present in the HashMap. Because in map case we can't have item.getKey() or item.getVAlue()
         for (var item : charFrequencyMap.entrySet()){
@@ -48,10 +48,10 @@ public class HuffmanCoding {
         createCharCodes(root.right(), str + '1', charCode);
         return charCode;
     }
-    public  boolean isLeaf(Node node) {
+    private   boolean isLeaf(Node node) {
         return node.left() == null && node.right() == null;
     }
-    public StringBuilder produceEncodedString (){
+    private StringBuilder produceEncodedString (){
         StringBuilder resultString = new StringBuilder();
         for (char c: FileReader.getStringData().toCharArray()){
             resultString.append(charCodeMap.get(c));
