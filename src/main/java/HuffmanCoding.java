@@ -15,7 +15,8 @@ public class HuffmanCoding {
     public void encode(String data){
         Node root = createHuffmanTree(data);
         charCodeMap = createCharCodes(root, "", charCodeMap);
-
+        StringBuilder result = produceEncodedString();
+        System.out.println("Encoded text: "+result);
     }
     public Node createHuffmanTree(String data){
         fillMap(data);
@@ -49,6 +50,13 @@ public class HuffmanCoding {
     }
     public  boolean isLeaf(Node node) {
         return node.left() == null && node.right() == null;
+    }
+    public StringBuilder produceEncodedString (){
+        StringBuilder resultString = new StringBuilder();
+        for (char c: FileReader.getStringData().toCharArray()){
+            resultString.append(charCodeMap.get(c));
+        }
+        return resultString;
     }
 }
 
