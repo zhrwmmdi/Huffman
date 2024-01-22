@@ -1,3 +1,5 @@
+import Coding.HuffmanCoding;
+import Coding.HuffmanDecoding;
 import data_handler.Browser;
 import data_handler.FileReader;
 public class Main {

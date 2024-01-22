@@ -1,3 +1,6 @@
+package Coding;
+
+import Coding.HuffmanCoding;
 import structure.Node;
 public class HuffmanDecoding {
     private final Node root;

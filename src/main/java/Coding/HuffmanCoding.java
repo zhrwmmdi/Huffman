@@ -1,3 +1,5 @@
+package Coding;
+
 import data_handler.FileReader;
 import structure.Node;
 
@@ -61,11 +63,6 @@ public class HuffmanCoding {
         }
         return resultString;
     }
-
-    public static Map<Character, String> getCharCodeMap() {
-        return charCodeMap;
-    }
-
     public static StringBuilder getCodedText() {
         return codedText;
     }
