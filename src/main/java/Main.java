@@ -9,5 +9,8 @@ public class Main {
 
         HuffmanCoding huffman = new HuffmanCoding();
         huffman.encode(FileReader.getStringData());
+
+        HuffmanDecoding decoding = new HuffmanDecoding();
+        decoding.decode();
     }
 }

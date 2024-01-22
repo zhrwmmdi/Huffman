@@ -8,15 +8,17 @@ import java.util.PriorityQueue;
 
 public class HuffmanCoding {
     private final Map<Character, Integer> charFrequencyMap = new HashMap<>();
-    private Map<Character, String> charCodeMap = new HashMap<>();
+    private static Map<Character, String> charCodeMap = new HashMap<>();
+    private static StringBuilder codedText;
+    private static Node root;
 
     //The double colon (::) operator, also known as method reference operator in Java, is used to call a method by referring to it with the help of its class directly.
     private final PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(Node::getFrequency));
     public void encode(String data){
         Node root = createHuffmanTree(data);
         charCodeMap = createCharCodes(root, "", charCodeMap);
-        StringBuilder result = produceEncodedString();
-        System.out.println("Encoded text: "+result);
+        codedText = produceEncodedString();
+        System.out.println("Encoded text: "+ codedText);
     }
     private Node createHuffmanTree(String data){
         fillMap(data);
@@ -33,7 +35,8 @@ public class HuffmanCoding {
 
             queue.add(new Node(sumFreq, left, right));
         }
-        return queue.peek();
+        root = queue.peek();
+        return root;
     }
     private void fillMap(String data){
         for (char c:data.toCharArray()){
@@ -57,6 +60,17 @@ public class HuffmanCoding {
             resultString.append(charCodeMap.get(c));
         }
         return resultString;
+    }
+
+    public static Map<Character, String> getCharCodeMap() {
+        return charCodeMap;
+    }
+
+    public static StringBuilder getCodedText() {
+        return codedText;
+    }
+    public static Node getRoot(){
+        return root;
     }
 }
 
