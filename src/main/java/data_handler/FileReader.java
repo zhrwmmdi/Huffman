@@ -10,7 +10,7 @@ public class FileReader {
         try {
             Scanner reader = new Scanner(file);
             while (reader.hasNext()){
-                stringData = stringData.concat(reader.next());
+                stringData = stringData.concat(reader.nextLine());
             }
         }catch (Exception ex){
             System.err.println("ERROR in readFile() method of data_handler.FileReader class: "+ex.getMessage());
