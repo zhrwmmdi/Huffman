@@ -3,9 +3,9 @@ package data_handler;
 import java.io.File;
 import java.util.Scanner;
 
-public class FileReader {
+ public class FileReader {
     private static String stringData = "";
-    public void readFile(String path){
+    protected void readFile(String path){
         File file = new File(path);
         try {
             Scanner reader = new Scanner(file);
