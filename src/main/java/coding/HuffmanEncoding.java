@@ -3,6 +3,9 @@ package coding;
 import data_handler.FileReader;
 import structure.Node;
 
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +23,17 @@ public class HuffmanEncoding {
         Node root = createHuffmanTree(data);
         charCodeMap = createCharCodes(root, "", charCodeMap);
         codedText = produceEncodedString();
+        createComFile(String.valueOf(codedText));
         System.out.println("Encoded text: "+ codedText);
+    }
+    public void createComFile(String data){
+        String destinationPath = String.format("C:/Users/Hp/Desktop/Compressed Files/%s.cmp",FileReader.getStringData());
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(destinationPath))) {
+            dos.writeChars(data);
+            System.out.println("File created successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private Node createHuffmanTree(String data){
         fillMap(data);

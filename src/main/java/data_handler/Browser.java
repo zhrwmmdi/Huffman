@@ -29,7 +29,7 @@ public class Browser {
         if (selectedFile.getName().endsWith(".txt")){
             HuffmanEncoding encoder = new HuffmanEncoding();
             encoder.encode(FileReader.getStringData());
-        } else if (selectedFile.getName().endsWith(".com")) {
+        } else if (selectedFile.getName().endsWith(".cmp")) {
             HuffmanDecoding decoding = new HuffmanDecoding();
             decoding.decode();
         }else {
@@ -43,8 +43,8 @@ public class Browser {
         JFileChooser fileChooser = new JFileChooser();
 
         FileNameExtensionFilter txt = new FileNameExtensionFilter("Text Files (*.txt)", "txt");
-        FileNameExtensionFilter com = new FileNameExtensionFilter("Compressed Files (*.com)", "com");
-        fileChooser.setFileFilter(com);
+        FileNameExtensionFilter cmp = new FileNameExtensionFilter("Compressed Files (*.cmp)", "cmp");
+        fileChooser.setFileFilter(cmp);
         fileChooser.setFileFilter(txt);
 
         int result = fileChooser.showOpenDialog(frame);
