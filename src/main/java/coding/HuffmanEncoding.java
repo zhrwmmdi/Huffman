@@ -1,4 +1,4 @@
-package Coding;
+package coding;
 
 import data_handler.FileReader;
 import structure.Node;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-public class HuffmanCoding {
+public class HuffmanEncoding {
     private final Map<Character, Integer> charFrequencyMap = new HashMap<>();
     private static Map<Character, String> charCodeMap = new HashMap<>();
     private static StringBuilder codedText;
