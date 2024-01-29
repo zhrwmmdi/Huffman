@@ -23,17 +23,18 @@ public class HuffmanEncoding {
         Node root = createHuffmanTree(data);
         charCodeMap = createCharCodes(root, "", charCodeMap);
         codedText = produceEncodedString();
-        createComFile(String.valueOf(codedText));
+        createCmpFile(String.valueOf(codedText));
         System.out.println("Encoded text: "+ codedText);
     }
-    public void createComFile(String data){
+    public void createCmpFile(String data){
         String destinationPath = String.format("C:/Users/Hp/Desktop/Compressed Files/%s.cmp",FileReader.getStringData());
         try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(destinationPath))) {
             //dos.writeChars();
-            dos.writeChars(data);
             for (var item : charCodeMap.entrySet()){
                 dos.writeChars(item.getKey()+item.getValue());
             }
+            dos.writeChars("\n");
+            dos.writeChars(data);
             System.out.println("File created successfully in C -> Users -> Hp -> Desktop -> Compressed Files.");
         } catch (IOException e) {
             e.printStackTrace();
