@@ -12,28 +12,29 @@ public class Browser {
     private String selectedFilePath;
     private File selectedFile;
 
-
     public Browser() {
-        frame =  new JFrame();
+        frame = new JFrame();
         frame.setSize(400, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
     }
-    public void browse(){
+
+    public void browse() {
         showFileChooser();
         FileReader reader = new FileReader();
         reader.readFile(this.getSelectedFilePath());
         chooseFunction();
     }
-    private void chooseFunction(){
-        if (selectedFile.getName().endsWith(".txt")){
+
+    private void chooseFunction() {
+        if (selectedFile.getName().endsWith(".txt")) {
             HuffmanEncoding encoder = new HuffmanEncoding();
             encoder.encode(FileReader.getStringData());
         } else if (selectedFile.getName().endsWith(".cmp")) {
             HuffmanDecoding decoding = new HuffmanDecoding();
             decoding.decode(FileReader.getStringData());
-        }else {
-            JOptionPane.showMessageDialog(null,"Wrong file format.\nPlease choose a proper file.","Wrong Format",JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Wrong file format.\nPlease choose a proper file.", "Wrong Format", JOptionPane.WARNING_MESSAGE);
             browse();
         }
         System.exit(0);
@@ -51,8 +52,9 @@ public class Browser {
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileChooser.getSelectedFile();
             selectedFilePath = selectedFile.getAbsolutePath();
-        }else System.exit(0);
+        } else System.exit(0);
     }
+
     public String getSelectedFilePath() {
         return selectedFilePath;
     }
