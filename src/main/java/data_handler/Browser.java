@@ -31,7 +31,7 @@ public class Browser {
             encoder.encode(FileReader.getStringData());
         } else if (selectedFile.getName().endsWith(".cmp")) {
             HuffmanDecoding decoding = new HuffmanDecoding();
-            decoding.decode();
+            decoding.decode(FileReader.getStringData());
         }else {
             JOptionPane.showMessageDialog(null,"Wrong file format.\nPlease choose a proper file.","Wrong Format",JOptionPane.WARNING_MESSAGE);
             browse();

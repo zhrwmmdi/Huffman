@@ -1,41 +1,39 @@
 package coding;
-import structure.Node;
+import java.util.HashMap;
+import java.util.Map;
+
 public class HuffmanDecoding {
-    private final Node root;
-    private final StringBuilder codedText;
-    public HuffmanDecoding(){
-        codedText = HuffmanEncoding.getCodedText();
-        root = HuffmanEncoding.getRoot();
-    }
-    public void decode(){
-        System.out.print("Decoded text: ");
-        //For input with only one kind of character like a, aa, aaa
-        if (isLeaf(root)) {
-            int freq = root.getFrequency();
-            for (int i = 0; i < freq; i++) {
-                System.out.print(root.getCharacter());
+
+    private final Map<String,String> charCodeMap = new HashMap<>();
+    private String codedData;
+    public void decode(String data){
+
+        String[] split =data.split("[\\D]");
+        codedData = split[0];
+        //fill charCode map
+        for (int i = 0, j =1; i < data.length(); i++) {
+            if (!Character.isDigit(data.charAt(i))){
+                charCodeMap.put(String.valueOf(data.charAt(i)),split[j]);
+                j++;
             }
         }
-        else {
-            int index = -1;
-            while (index < codedText.length() - 1) {
-                index = decodeData(root, index, codedText);
+        System.out.println("Decoded text: "+getOriginalText(codedData,charCodeMap));
+    }
+
+    private StringBuilder getOriginalText(String codedText, Map<String,String> charCodes){
+        //Decode according to map
+        StringBuilder result = new StringBuilder();
+        String s = "";
+        for (int i = 0; i < codedText.length(); i++) {
+            s = s.concat(String.valueOf(codedText.charAt(i)));
+            for (Map.Entry<String,String> entry: charCodes.entrySet()){
+                if (s.equals(entry.getValue())){
+                    result.append(entry.getKey());
+                    s = "";
+                    break;
+                }
             }
         }
-        System.exit(0);
-    }
-    private static int decodeData(Node root, int index, StringBuilder codedTxt) {
-        if (root == null) return index;
-        if (isLeaf(root)){
-            System.out.print(root.getCharacter());
-            return index;
-        }
-        index++;
-        root = (codedTxt.charAt(index) == '0') ? root.left() : root.right();
-        index = decodeData(root, index, codedTxt);
-        return index;
-    }
-    private static boolean isLeaf(Node node) {
-        return node.left() == null && node.right() == null;
+        return result;
     }
 }
