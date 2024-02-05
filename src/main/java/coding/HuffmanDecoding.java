@@ -9,13 +9,15 @@ public class HuffmanDecoding {
     private final Map<String, String> charCodeMap = new HashMap<>();
 
     public void decode(String data) {
-        String[] split = data.split("[\\D]");
+        String[] split = data.split("[ ]");
         String codedData = split[0];
         //fill charCode map
-        for (int i = 0, j = 1; i < data.length(); i++) {
-            if (!Character.isDigit(data.charAt(i))) {
-                charCodeMap.put(String.valueOf(data.charAt(i)), split[j]);
+        for (int j = 1; j < split.length ; j++) {
+            if (split[j].length()== 0){
                 j++;
+                charCodeMap.put(" ", split[j]);
+            }else {
+                charCodeMap.put(String.valueOf(split[j].charAt(0)), split[j].substring(1));
             }
         }
         String result = String.valueOf(getOriginalText(codedData, charCodeMap));

@@ -27,7 +27,7 @@ public class FileWriter {
             dos = new DataOutputStream(new FileOutputStream(destinationPath));
             dos.writeChars(data);
             for (var item : charCodeMap.entrySet()) {
-                dos.writeChars(item.getKey() + item.getValue());
+                dos.writeChars(" "+item.getKey() + item.getValue());
             }
             System.out.println("File created successfully in C -> Users -> Hp -> Desktop -> Compressed Files.");
         } catch (IOException e) {
