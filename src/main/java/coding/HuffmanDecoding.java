@@ -10,9 +10,9 @@ public class HuffmanDecoding {
 
     public void decode(String data) {
         String[] split = data.split("[ ]");
-        String codedData = split[0];
+        String codedData = split[split.length-1];
         //fill charCode map
-        for (int j = 1; j < split.length ; j++) {
+        for (int j = 0; j < split.length-1 ; j++) {
             if (split[j].length()== 0){
                 j++;
                 charCodeMap.put(" ", split[j]);

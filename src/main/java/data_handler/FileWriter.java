@@ -25,10 +25,11 @@ public class FileWriter {
         String destinationPath = String.format(compressedFilesPath, FileReader.getStringData());
         try {
             dos = new DataOutputStream(new FileOutputStream(destinationPath));
-            dos.writeChars(data);
             for (var item : charCodeMap.entrySet()) {
-                dos.writeChars(" "+item.getKey() + item.getValue());
+                dos.writeChars(item.getKey() + item.getValue()+" ");
             }
+            dos.writeChars(data);
+
             System.out.println("File created successfully in C -> Users -> Hp -> Desktop -> Compressed Files.");
         } catch (IOException e) {
             System.err.println("Error in FileWriter.createCmpFile(): " + e.getMessage());
