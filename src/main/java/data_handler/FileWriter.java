@@ -1,6 +1,7 @@
 package data_handler;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -9,13 +10,21 @@ import static coding.HuffmanEncoding.charCodeMap;
 public class FileWriter {
     static DataOutputStream dos;
     private final static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/%s.cmp";
-    private final static String originalFilesPath = "C:/Users/Hp/Desktop/Original Files/original.txt";
+    private static String originalFilesPath = "C:/Users/Hp/Desktop/Original Files/original.txt";
 
     public static void createOriginalTxtFile(String data) {
         try {
-            dos = new DataOutputStream(new FileOutputStream(originalFilesPath));
-            dos.writeBytes(data);
-            System.out.println("File created successfully in C -> Users -> Hp -> Desktop -> Original Files.");
+            int count = 1;
+            File file = new File(originalFilesPath);
+            while (file.exists()){
+                originalFilesPath = String.format("C:/Users/Hp/Desktop/Original Files/original(%d).txt",count);
+                file = new File(originalFilesPath);
+                count++;
+            }
+                dos = new DataOutputStream(new FileOutputStream(originalFilesPath));
+                dos.writeBytes(data);
+                System.out.println("File created successfully in C -> Users -> Hp -> Desktop -> Original Files.");
+
         } catch (IOException e) {
             System.err.println("Error in FileWriter.createOriginalTxtFile(): " + e.getMessage());
         }
