@@ -41,7 +41,7 @@ or store the result of coding package in an output file (FileWriter.java).
 * **structure:** This package only contains Node.java class that is a vital element in Huffman algorithm tree.
 ### Classes
 **HuffmanEncoding.java**
-This class scans the input data and creates a hashmap that represents characters of the input file and their frequency.
+scans the input data and creates a hashmap that represents characters of the input file and their frequency.
 This hashmap is later used for creating the Huffman tree using a priority queue. When the tree is ready, then each character
 code is defined by rolling over the tree. Each character and its huffman code is saved in another hashmap for later usage.
 The coded text is given to FileWriter.java class to be saved locally as a compressed file (.com).
@@ -73,4 +73,7 @@ a character and its frequency is stored.
 **Main.java**
 is the main class that only needs a Browser object to run the whole project.
 
+## Usage Examples
+Let's start encoding with a text file that contains text "Huffman encoding and decoding!"
+Run Main.java class in your IDE. A file chooser will show up. Navigate to the text file location and press open button.
 
