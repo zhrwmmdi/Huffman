@@ -9,7 +9,7 @@ import static coding.HuffmanEncoding.charCodeMap;
 
 public class FileWriter {
     static DataOutputStream dos;
-    private final static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/%s.cmp";
+    private static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/%s.cmp";
     private static String originalFilesPath = "C:/Users/Hp/Desktop/Original Files/original.txt";
 
     public static void createOriginalTxtFile(String data) {
@@ -33,6 +33,13 @@ public class FileWriter {
     public static void createCmpFile(String data) {
         String destinationPath = String.format(compressedFilesPath, FileReader.getStringData());
         try {
+            int count = 1;
+            File file = new File(compressedFilesPath);
+            while (file.exists()){
+                compressedFilesPath = String.format("C:/Users/Hp/Desktop/Compressed Files/compressed(%d).txt",count);
+                file = new File(compressedFilesPath);
+                count++;
+            }
             dos = new DataOutputStream(new FileOutputStream(destinationPath));
             for (var item : charCodeMap.entrySet()) {
                 dos.writeChars(item.getKey() + item.getValue()+" ");
