@@ -9,7 +9,7 @@ import static coding.HuffmanEncoding.charCodeMap;
 
 public class FileWriter {
     static DataOutputStream dos;
-    private static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/%s.cmp";
+    private static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/compressed.cmp";
     private static String originalFilesPath = "C:/Users/Hp/Desktop/Original Files/original.txt";
 
     public static void createOriginalTxtFile(String data) {
@@ -30,7 +30,7 @@ public class FileWriter {
         }
     }
 
-    public static void createCmpFile(String data) {
+    public static void createCmpFile(String[] data, int diff) {
         String destinationPath = String.format(compressedFilesPath, FileReader.getStringData());
         try {
             int count = 1;
@@ -40,13 +40,21 @@ public class FileWriter {
                 file = new File(compressedFilesPath);
                 count++;
             }
-            dos = new DataOutputStream(new FileOutputStream(destinationPath));
-            for (var item : charCodeMap.entrySet()) {
-                dos.writeChars(item.getKey() + item.getValue()+" ");
-            }
-            dos.writeChars(data);
+                dos = new DataOutputStream(new FileOutputStream(destinationPath));
+                dos.writeByte(diff);
+                dos.writeByte(' ');
+                for (var item : charCodeMap.entrySet()) {
+                    dos.writeByte(item.getKey());
+                    for (int i = 0; i < item.getValue().length(); i++) {
+                        dos.writeByte(item.getValue().charAt(i));
+                    }
+                    dos.writeByte(' ');
+                }
 
-            System.out.println("File created successfully in C -> Users -> Hp -> Desktop -> Compressed Files.");
+                for (String s: data){
+                    dos.writeBytes(s+' ');
+                }
+                System.out.println("File created successfully in C -> Users -> Hp -> Desktop -> Compressed Files.");
         } catch (IOException e) {
             System.err.println("Error in FileWriter.createCmpFile(): " + e.getMessage());
         }

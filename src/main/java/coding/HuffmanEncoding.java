@@ -4,10 +4,8 @@ import data_handler.FileReader;
 import data_handler.FileWriter;
 import structure.Node;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class HuffmanEncoding {
     private final Map<Character, Integer> charFrequencyMap = new HashMap<>();
@@ -21,9 +19,30 @@ public class HuffmanEncoding {
     public void encode(String data) {
         Node root = createHuffmanTree(data);
         charCodeMap = createCharCodes(root, "", charCodeMap);
+        System.out.println(charCodeMap);
         codedText = produceEncodedString();
-        FileWriter.createCmpFile(String.valueOf(codedText));
+
+        System.out.println(codedText);
+        String[] decimalcodesArr = toDecimal(String.valueOf(codedText));
+        int lastChunkLength = 8 - (codedText.length() % 8);
+
+        FileWriter.createCmpFile(decimalcodesArr, lastChunkLength);
         System.out.println("Encoded text: " + codedText);
+        System.out.println("Encoded text: " + Arrays.toString(decimalcodesArr));
+    }
+
+    private  String[] toDecimal(String binaryNumber){
+
+            int length = binaryNumber.length();
+            int numOfChunks = (int) Math.ceil((double) length / 8);
+            String[] chunks = new String[numOfChunks];
+
+            for (int i = 0; i < numOfChunks; i++) {
+                int startIndex = i * 8;
+                int endIndex = Math.min(startIndex + 8, length);
+                chunks[i] = String.valueOf(Integer.parseInt(binaryNumber.substring(startIndex, endIndex),2));
+            }
+            return chunks;
     }
 
     private Node createHuffmanTree(String data) {
@@ -47,7 +66,7 @@ public class HuffmanEncoding {
 
     private void fillMap(String data) {
         for (char c : data.toCharArray()) {
-            charFrequencyMap.put(c, (charFrequencyMap.getOrDefault(c, 0) + 1));
+            charFrequencyMap.put( c, (charFrequencyMap.getOrDefault(c, 0) + 1));
         }
     }
 
