@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class HuffmanEncoding {
-    private final Map<Character, Integer> charFrequencyMap = new HashMap<>();
+    private static final Map<Character, Integer> charFrequencyMap = new HashMap<>();
     public static Map<Character, String> charCodeMap = new HashMap<>();
     private static StringBuilder codedText;
     private static Node root;
@@ -22,8 +22,30 @@ public class HuffmanEncoding {
         Node root = createHuffmanTree(data);
         charCodeMap = createCharCodes(root, "", charCodeMap);
         codedText = produceEncodedString();
-        FileWriter.createCmpFile(String.valueOf(codedText));
+
+        char[] chuncks = convertCodeToAsciiChar(String.valueOf(codedText));
+        int lastChunkLength = codedText.length() % 8;
+
+        StringBuilder stringValue = new StringBuilder();
+        for (char c : chuncks){
+            stringValue.append(c);
+        }
+        FileWriter.createCmpFile(String.valueOf(stringValue));
         System.out.println("Encoded text: " + codedText);
+    }
+
+    private  char[] convertCodeToAsciiChar(String binaryNumber){
+
+        int length = binaryNumber.length();
+        int numOfChunks = (int) Math.ceil((double) length / 8);
+        char[] chunks = new char[numOfChunks];
+
+        for (int i = 0; i < numOfChunks; i++) {
+            int startIndex = i * 8;
+            int endIndex = Math.min(startIndex + 8, length);
+            chunks[i] = (char)Integer.parseInt(binaryNumber.substring(startIndex, endIndex),2);
+        }
+        return chunks;
     }
 
     private Node createHuffmanTree(String data) {
@@ -70,6 +92,10 @@ public class HuffmanEncoding {
             resultString.append(charCodeMap.get(c));
         }
         return resultString;
+    }
+
+    public static Map<Character, Integer> getCharFrequencyMap() {
+        return charFrequencyMap;
     }
 }
 

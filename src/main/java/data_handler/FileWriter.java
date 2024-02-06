@@ -1,5 +1,7 @@
 package data_handler;
 
+import coding.HuffmanEncoding;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,7 +11,7 @@ import static coding.HuffmanEncoding.charCodeMap;
 
 public class FileWriter {
     static DataOutputStream dos;
-    private static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/%s.cmp";
+    private static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/compress(%d).txt";
     private static String originalFilesPath = "C:/Users/Hp/Desktop/Original Files/original.txt";
 
     public static void createOriginalTxtFile(String data) {
@@ -31,7 +33,7 @@ public class FileWriter {
     }
 
     public static void createCmpFile(String data) {
-        String destinationPath = String.format(compressedFilesPath, FileReader.getStringData());
+       // String destinationPath = String.format(compressedFilesPath, FileReader.getStringData());
         try {
             int count = 1;
             File file = new File(compressedFilesPath);
@@ -40,11 +42,13 @@ public class FileWriter {
                 file = new File(compressedFilesPath);
                 count++;
             }
-            dos = new DataOutputStream(new FileOutputStream(destinationPath));
-            for (var item : charCodeMap.entrySet()) {
-                dos.writeChars(item.getKey() + item.getValue()+" ");
+            dos = new DataOutputStream(new FileOutputStream(compressedFilesPath));
+            for (var item : HuffmanEncoding.getCharFrequencyMap().entrySet()) {
+                dos.writeByte(item.getKey());
+                dos.writeBytes(String.valueOf(item.getValue()));
+                dos.writeByte(' ');
             }
-            dos.writeChars(data);
+            dos.writeBytes("\n"+data);
 
             System.out.println("File created successfully in C -> Users -> Hp -> Desktop -> Compressed Files.");
         } catch (IOException e) {
