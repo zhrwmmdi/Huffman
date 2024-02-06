@@ -9,8 +9,8 @@ import static coding.HuffmanEncoding.charCodeMap;
 
 public class FileWriter {
     static DataOutputStream dos;
-    private static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/compressed.cmp";
-    private static String originalFilesPath = "C:/Users/Hp/Desktop/Original Files/original.txt";
+   private static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/compressed.txt";
+   private static String originalFilesPath = "C:/Users/Hp/Desktop/Original Files/original.txt";
 
     public static void createOriginalTxtFile(String data) {
         try {
@@ -41,7 +41,7 @@ public class FileWriter {
                 count++;
             }
                 dos = new DataOutputStream(new FileOutputStream(destinationPath));
-                dos.writeByte(diff);
+                dos.writeBytes(String.valueOf(diff));
                 dos.writeByte(' ');
                 for (var item : charCodeMap.entrySet()) {
                     dos.writeByte(item.getKey());
