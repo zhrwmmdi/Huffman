@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static coding.HuffmanEncoding.charCodeMap;
 
 public class FileWriter {
     static DataOutputStream dos;

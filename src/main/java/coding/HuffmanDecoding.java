@@ -5,10 +5,7 @@ import structure.Node;
 
 import java.util.*;
 
-public class HuffmanDecoding {
-    private final Map<Character, Integer> charFreqMap = new HashMap<>();
-    private Map<Character,String> charCodeMap = new HashMap<>();
-    private final PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(Node::getFrequency));
+public class HuffmanDecoding extends Huffman {
     private int diff;
 
     public void decode(String data) {
@@ -33,44 +30,6 @@ public class HuffmanDecoding {
 
         //print out original data
         System.out.println("Decoded text: " + result);
-    }
-    private Node createHuffmanTree(){
-        for (var item : charFreqMap.entrySet()) {
-            queue.add(new Node(item.getKey(), item.getValue()));
-        }
-        while (queue.size() > 1) {
-            Node left = queue.poll();
-            Node right = queue.poll();
-
-            assert right != null;
-            int sumFreq = left.getFrequency() + right.getFrequency();
-
-            queue.add(new Node(sumFreq, left, right));
-        }
-        return queue.peek();
-    }
-    private void fillCharFreqMap(String[] split){
-        for (int j = 1; j < split.length-1 ; j++) {
-            if (split[j].length()== 0){
-                j++;
-                charFreqMap.put(' ', Integer.valueOf(split[j]));
-            }else {
-                charFreqMap.put(split[j].charAt(0), Integer.valueOf(split[j].substring(1)));
-            }
-        }
-    }
-
-    public Map<Character, String> createCharCodes(Node root, String str, Map<Character, String> charCode) {
-        if (root == null) return null;
-        if (isLeaf(root)) charCode.put(root.getCharacter(), str.length() > 0 ? str : "1");
-
-        createCharCodes(root.left(), str + '0', charCode);
-        createCharCodes(root.right(), str + '1', charCode);
-        return charCode;
-    }
-
-    private boolean isLeaf(Node node) {
-        return node.left() == null && node.right() == null;
     }
     private String processDecoding(String codedText) {
         int size = codedText.length();
