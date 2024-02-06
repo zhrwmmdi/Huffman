@@ -12,8 +12,10 @@ public class FileReader {
             Scanner reader = new Scanner(file);
             while (reader.hasNext()) {
                 stringData = stringData.concat(reader.nextLine());
+                System.out.println(stringData);
             }
-            stringData = stringData.replaceAll("\u0000", "");
+            stringData = stringData.replaceAll("\u0000", "");//????
+
         } catch (Exception ex) {
             System.err.println("ERROR in readFile() method of data_handler.FileReader class: " + ex.getMessage());
         }

@@ -11,7 +11,7 @@ import static coding.HuffmanEncoding.charCodeMap;
 
 public class FileWriter {
     static DataOutputStream dos;
-    private static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/compress(%d).txt";
+    private static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/compress(%d).cmp";
     private static String originalFilesPath = "C:/Users/Hp/Desktop/Original Files/original.txt";
 
     public static void createOriginalTxtFile(String data) {
@@ -32,17 +32,20 @@ public class FileWriter {
         }
     }
 
-    public static void createCmpFile(String data) {
+    public static void createCmpFile(String data, int diff) {
        // String destinationPath = String.format(compressedFilesPath, FileReader.getStringData());
         try {
             int count = 1;
             File file = new File(compressedFilesPath);
             while (file.exists()){
-                compressedFilesPath = String.format("C:/Users/Hp/Desktop/Compressed Files/compressed(%d).txt",count);
+                compressedFilesPath = String.format("C:/Users/Hp/Desktop/Compressed Files/compressed(%d).cmp",count);
                 file = new File(compressedFilesPath);
                 count++;
             }
             dos = new DataOutputStream(new FileOutputStream(compressedFilesPath));
+            dos.writeBytes(String.valueOf(diff));
+            dos.writeByte(' ');
+
             for (var item : HuffmanEncoding.getCharFrequencyMap().entrySet()) {
                 dos.writeByte(item.getKey());
                 dos.writeBytes(String.valueOf(item.getValue()));

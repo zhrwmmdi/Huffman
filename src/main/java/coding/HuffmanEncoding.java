@@ -30,7 +30,7 @@ public class HuffmanEncoding {
         for (char c : chuncks){
             stringValue.append(c);
         }
-        FileWriter.createCmpFile(String.valueOf(stringValue));
+        FileWriter.createCmpFile(String.valueOf(stringValue), lastChunkLength);
         System.out.println("Encoded text: " + codedText);
     }
 
@@ -43,7 +43,11 @@ public class HuffmanEncoding {
         for (int i = 0; i < numOfChunks; i++) {
             int startIndex = i * 8;
             int endIndex = Math.min(startIndex + 8, length);
-            chunks[i] = (char)Integer.parseInt(binaryNumber.substring(startIndex, endIndex),2);
+            StringBuilder x = new StringBuilder(binaryNumber.substring(startIndex, endIndex)); //each chunk with binary value
+            if (x.length()<8){
+                x.append("0".repeat(Math.max(0, (8 - x.length()))));
+            }
+            chunks[i] = (char)Integer.parseInt(x.toString(),2);
         }
         return chunks;
     }
