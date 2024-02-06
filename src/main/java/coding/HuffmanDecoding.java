@@ -14,9 +14,7 @@ public class HuffmanDecoding {
     int diff;
 
     public void decode(String data) {
-        System.out.println(data);
         String[] split = data.split("[ ]");
-        System.out.println(Arrays.toString(split));
         diff  = Integer.parseInt(split[0]);
         String codedData = split[split.length-1];
         //fill charCode map
@@ -81,28 +79,26 @@ public class HuffmanDecoding {
         String[] binar  = new String[codedText.length()];
         for (int i = 0; i < codedText.length()-1; i++) {
             int da = codedText.charAt(i);
-            if (da < 0) da+=256;
-            //gets the ascii code of each character in decimal redix
-            String f = Integer.toBinaryString(da); //converts that decimal ascii value to binary
-            StringBuilder h = new StringBuilder();
 
-            System.out.println(da);
-            System.out.println(f);
+            //gets the ascii code of each character in decimal redix
+            String f = Integer.toBinaryString(da);//converts that decimal ascii value to binary
+            StringBuilder h = new StringBuilder();
             //put zero before it
-            if (f.length() < 8){
-                int y = 8 - f.length();
-                h.append("0".repeat(y));
-                h.append(f);
+            StringBuilder paddedString = new StringBuilder(f);
+            while (paddedString.length() < 8) {
+                paddedString.insert(0, '0');
             }
 
+
             //put 8 bit binary num in an array
-            binar[i] = h.toString();
+            binar[i] = String.valueOf(paddedString);
         }
 
         //the last char that is the last chunk
-        int t = codedText.charAt(codedText.length()-1); //ascii code of last char that was the last chunck
+        int t = codedText.charAt(codedText.length()-1);//ascii code of last char that was the last chunck
         String tt = Integer.toBinaryString(t);//binary value of the last chunk
-        tt  = tt.substring(0,tt.length() - diff);
+
+
         //check 8 length
         StringBuilder h = new StringBuilder();
         if (tt.length() < 8){
@@ -110,7 +106,13 @@ public class HuffmanDecoding {
             h.append("0".repeat(y));
             h.append(tt);
         }
-        binar[codedText.length() - 1] = h.toString();
+        tt = String.valueOf(h);
+        //tt = 01000000
+        tt  = tt.substring(0,diff);//010
+
+        binar[codedText.length() - 1] =tt;
+
+
 
         StringBuilder binarResult  = new StringBuilder();
         for (String c: binar){

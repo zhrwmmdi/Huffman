@@ -1,6 +1,7 @@
 package data_handler;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -25,19 +26,24 @@ public class FileReader {
         }
     }
     protected void readCmpFile(String path){
-        try {
-            // Read the bytes from the file
-            byte[] byteContent = Files.readAllBytes(Paths.get(path));
 
-            // Convert the byte content to a string using UTF-8 encoding
-            String stringContent = new String(byteContent, StandardCharsets.UTF_8);
+                StringBuilder stringBuilder = new StringBuilder();
 
-            // Now you have the string value of the content
-            stringData = stringContent;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+                try (FileInputStream inputStream = new FileInputStream(path)) {
+                    int byteValue;
+                    while ((byteValue = inputStream.read()) != -1) {
+                        char character = (char) byteValue;
+                        stringBuilder.append(character);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                String originalString = stringBuilder.toString();
+                stringData = originalString;
+            }
+
+
 
     public static String getStringData() {
         return stringData;
