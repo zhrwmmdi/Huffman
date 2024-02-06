@@ -4,10 +4,7 @@ import data_handler.FileReader;
 import data_handler.FileWriter;
 import structure.Node;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class HuffmanEncoding {
     private static final Map<Character, Integer> charFrequencyMap = new HashMap<>();
@@ -23,11 +20,11 @@ public class HuffmanEncoding {
         charCodeMap = createCharCodes(root, "", charCodeMap);
         codedText = produceEncodedString();
 
-        char[] chuncks = convertCodeToAsciiChar(String.valueOf(codedText));
+        char[] chunks = convertCodeToAsciiChar(String.valueOf(codedText));
         int lastChunkLength = codedText.length() % 8;
 
         StringBuilder stringValue = new StringBuilder();
-        for (char c : chuncks){
+        for (char c : chunks){
             stringValue.append(c);
         }
         FileWriter.createCmpFile(String.valueOf(stringValue), lastChunkLength);

@@ -98,16 +98,14 @@ public class HuffmanDecoding {
         int t = codedText.charAt(codedText.length()-1);//ascii code of last char that was the last chunck
         String tt = Integer.toBinaryString(t);//binary value of the last chunk
 
-
         //check 8 length
         StringBuilder h = new StringBuilder();
         if (tt.length() < 8){
             int y = 8 - tt.length();
             h.append("0".repeat(y));
             h.append(tt);
+            tt = String.valueOf(h);
         }
-        tt = String.valueOf(h);
-        //tt = 01000000
         tt  = tt.substring(0,diff);//010
 
         binar[codedText.length() - 1] =tt;
@@ -122,7 +120,7 @@ public class HuffmanDecoding {
         //now we have th binary decoded value, lets get the original txt
 
 
-        System.out.println("re:"+binarResult);
+        System.out.println("Binary Result:"+binarResult);
 
 
         StringBuilder result = new StringBuilder();

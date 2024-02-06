@@ -52,7 +52,7 @@ public class Browser {
                 if (selectedFile.getName().endsWith(".cmp")) {
                     reader.readCmpFile(this.getSelectedFilePath());
                 }else {
-                    reader.readFile(this.getSelectedFilePath());
+                    reader.readTxtFile(this.getSelectedFilePath());
                 }
 
                 chooseFunction();
