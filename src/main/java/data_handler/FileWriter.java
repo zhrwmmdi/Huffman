@@ -51,7 +51,7 @@ public class FileWriter {
                 dos.writeBytes(String.valueOf(item.getValue()));
                 dos.writeByte(' ');
             }
-            dos.writeBytes("\n"+data);
+            dos.writeBytes(data);
 
             System.out.println("File created successfully in C -> Users -> Hp -> Desktop -> Compressed Files.");
         } catch (IOException e) {

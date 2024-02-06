@@ -49,7 +49,12 @@ public class Browser {
                 frame.setVisible(false);
                 showFileChooser();
                 FileReader reader = new FileReader();
-                reader.readFile(this.getSelectedFilePath());
+                if (selectedFile.getName().endsWith(".cmp")) {
+                    reader.readCmpFile(this.getSelectedFilePath());
+                }else {
+                    reader.readFile(this.getSelectedFilePath());
+                }
+
                 chooseFunction();
             }
 

@@ -28,6 +28,7 @@ public class HuffmanDecoding {
                 charFreqMap.put(split[j].charAt(0), Integer.valueOf(split[j].substring(1)));
             }
         }
+        //tick
 
         //create the tree
         for (var item : charFreqMap.entrySet()) {
@@ -79,10 +80,14 @@ public class HuffmanDecoding {
         //Decode according to map
         String[] binar  = new String[codedText.length()];
         for (int i = 0; i < codedText.length()-1; i++) {
-            int da = codedText.charAt(i); //gets the ascii code of each character in decimal redix
+            int da = codedText.charAt(i);
+            if (da < 0) da+=256;
+            //gets the ascii code of each character in decimal redix
             String f = Integer.toBinaryString(da); //converts that decimal ascii value to binary
             StringBuilder h = new StringBuilder();
 
+            System.out.println(da);
+            System.out.println(f);
             //put zero before it
             if (f.length() < 8){
                 int y = 8 - f.length();
@@ -114,6 +119,8 @@ public class HuffmanDecoding {
 
         //now we have th binary decoded value, lets get the original txt
 
+
+        System.out.println("re:"+binarResult);
 
 
         StringBuilder result = new StringBuilder();
