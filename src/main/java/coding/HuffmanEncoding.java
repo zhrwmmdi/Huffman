@@ -22,10 +22,12 @@ public class HuffmanEncoding extends Huffman{
             stringValue.append(c);
         }
         FileWriter.createCmpFile(String.valueOf(stringValue), lastChunkLength);
-        System.out.println("Encoded text: " + codedText);
+
+//        System.out.println("\033[0;1m"+"Encoded text: " + stringValue+"\033[0m");
+//        System.out.println("Binary encoded text: " + codedText);
     }
 
-    private  char[] convertCodeToAsciiChar(String binaryNumber){
+    private char[] convertCodeToAsciiChar(String binaryNumber){
 
         int length = binaryNumber.length();
         int numOfChunks = (int) Math.ceil((double) length / 8);

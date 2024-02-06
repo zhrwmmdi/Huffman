@@ -7,6 +7,7 @@ import java.util.*;
 
 public class HuffmanDecoding extends Huffman {
     private int diff;
+    private final StringBuilder binaryResult  = new StringBuilder();
 
     public void decode(String data) {
         String[] split = data.split("[ ]");
@@ -25,11 +26,11 @@ public class HuffmanDecoding extends Huffman {
         //find out the original data by help of charCodeMap
         String result = String.valueOf(processDecoding(codedData));
 
+        System.out.println( "\033[0;1m"+"Decoded text: " + result+"\033[0m");
+        //System.out.println("Binary Result:"+binaryResult);
+
         //write original data on txt file
         FileWriter.createOriginalTxtFile(result);
-
-        //print out original data
-        System.out.println("Decoded text: " + result);
     }
     private String processDecoding(String codedText) {
         int size = codedText.length();
@@ -66,11 +67,9 @@ public class HuffmanDecoding extends Huffman {
         binary8bitChucks[size - 1] = String.valueOf(paddedString);
 
         //get the original binary code
-        StringBuilder binaryResult  = new StringBuilder();
         for (String c: binary8bitChucks){
             binaryResult.append(c);
         }
-        System.out.println("Binary Result:"+binaryResult);
         return String.valueOf(getOriginalResult(binaryResult, charCodeMap));
     }
     private StringBuilder getOriginalResult(StringBuilder binaryResult, Map<Character,String> charCodeMap){

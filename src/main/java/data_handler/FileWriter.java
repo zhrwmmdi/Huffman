@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class FileWriter {
     static DataOutputStream dos;
-    private static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/compress(%d).cmp";
+    private static String compressedFilesPath = "C:/Users/Hp/Desktop/Compressed Files/compressed.cmp";
     private static String originalFilesPath = "C:/Users/Hp/Desktop/Original Files/original.txt";
 
     public static void createOriginalTxtFile(String data) {
@@ -24,7 +24,7 @@ public class FileWriter {
             }
                 dos = new DataOutputStream(new FileOutputStream(originalFilesPath));
                 dos.writeBytes(data);
-                System.out.println("File created successfully in C -> Users -> Hp -> Desktop -> Original Files.");
+                System.out.println("\033[0;32m"+"File created successfully in C -> Users -> Hp -> Desktop -> Original Files."+"\033[0m");
 
         } catch (IOException e) {
             System.err.println("Error in FileWriter.createOriginalTxtFile(): " + e.getMessage());
@@ -32,7 +32,6 @@ public class FileWriter {
     }
 
     public static void createCmpFile(String data, int diff) {
-       // String destinationPath = String.format(compressedFilesPath, FileReader.getStringData());
         try {
             int count = 1;
             File file = new File(compressedFilesPath);
@@ -52,7 +51,7 @@ public class FileWriter {
             }
             dos.writeBytes(data);
 
-            System.out.println("File created successfully in C -> Users -> Hp -> Desktop -> Compressed Files.");
+            System.out.println("\033[0;32m"+"File created successfully in C -> Users -> Hp -> Desktop -> Compressed Files."+"\033[0m");
         } catch (IOException e) {
             System.err.println("Error in FileWriter.createCmpFile(): " + e.getMessage());
         }
