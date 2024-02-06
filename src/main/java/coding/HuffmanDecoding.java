@@ -1,6 +1,5 @@
 package coding;
 
-import data_handler.FileReader;
 import data_handler.FileWriter;
 import structure.Node;
 
@@ -10,25 +9,32 @@ public class HuffmanDecoding {
     private final Map<Character, Integer> charFreqMap = new HashMap<>();
     private Map<Character,String> charCodeMap = new HashMap<>();
     private final PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(Node::getFrequency));
-    Node root;
-    int diff;
+    private int diff;
 
     public void decode(String data) {
         String[] split = data.split("[ ]");
         diff  = Integer.parseInt(split[0]);
         String codedData = split[split.length-1];
-        //fill charCode map
-        for (int j = 1; j < split.length-1 ; j++) {
-            if (split[j].length()== 0){
-                j++;
-                charFreqMap.put(' ', Integer.valueOf(split[j]));
-            }else {
-                charFreqMap.put(split[j].charAt(0), Integer.valueOf(split[j].substring(1)));
-            }
-        }
-        //tick
 
-        //create the tree
+        //fill charFreqMap according to the beginning of the compressed file
+        fillCharFreqMap(split);
+
+        //create the tree according to the charFreq map
+        Node root = createHuffmanTree();
+
+        //get the codes according to huffman tree root
+        charCodeMap = createCharCodes(root,"",charCodeMap);
+
+        //find out the original data by help of charCodeMap
+        String result = String.valueOf(processDecoding(codedData));
+
+        //write original data on txt file
+        FileWriter.createOriginalTxtFile(result);
+
+        //print out original data
+        System.out.println("Decoded text: " + result);
+    }
+    private Node createHuffmanTree(){
         for (var item : charFreqMap.entrySet()) {
             queue.add(new Node(item.getKey(), item.getValue()));
         }
@@ -41,16 +47,17 @@ public class HuffmanDecoding {
 
             queue.add(new Node(sumFreq, left, right));
         }
-        root = queue.peek();
-
-
-        //get the codes
-        charCodeMap = createCharCodes(root,"",charCodeMap);
-
-
-        String result = String.valueOf(getOriginalText(codedData, charCodeMap));
-        FileWriter.createOriginalTxtFile(result);
-        System.out.println("Decoded text: " + result);
+        return queue.peek();
+    }
+    private void fillCharFreqMap(String[] split){
+        for (int j = 1; j < split.length-1 ; j++) {
+            if (split[j].length()== 0){
+                j++;
+                charFreqMap.put(' ', Integer.valueOf(split[j]));
+            }else {
+                charFreqMap.put(split[j].charAt(0), Integer.valueOf(split[j].substring(1)));
+            }
+        }
     }
 
     public Map<Character, String> createCharCodes(Node root, String str, Map<Character, String> charCode) {
@@ -65,69 +72,55 @@ public class HuffmanDecoding {
     private boolean isLeaf(Node node) {
         return node.left() == null && node.right() == null;
     }
+    private String processDecoding(String codedText) {
+        int size = codedText.length();
+        String[] binary8bitChucks  = new String[size];
+        for (int i = 0; i < size-1; i++) {
+            int asciiDec = codedText.charAt(i); //The ascii code of each char in decimal format
 
-    private StringBuilder produceEncodedString() {
-        StringBuilder resultString = new StringBuilder();
-        for (char c : FileReader.getStringData().toCharArray()) {
-            resultString.append(charCodeMap.get(c));
-        }
-        return resultString;
-    }
+            String asciiBin = Integer.toBinaryString(asciiDec);//The ascii code of each char in binary format
 
-    private StringBuilder getOriginalText(String codedText, Map<Character, String> charCodes) {
-        //Decode according to map
-        String[] binar  = new String[codedText.length()];
-        for (int i = 0; i < codedText.length()-1; i++) {
-            int da = codedText.charAt(i);
-
-            //gets the ascii code of each character in decimal redix
-            String f = Integer.toBinaryString(da);//converts that decimal ascii value to binary
-            StringBuilder h = new StringBuilder();
-            //put zero before it
-            StringBuilder paddedString = new StringBuilder(f);
+            //put zero before at the beginning to reach length 8
+            StringBuilder paddedString = new StringBuilder(asciiBin);
             while (paddedString.length() < 8) {
                 paddedString.insert(0, '0');
             }
 
-
-            //put 8 bit binary num in an array
-            binar[i] = String.valueOf(paddedString);
+            //store each 8 bit binary num in an array
+            binary8bitChucks[i] = String.valueOf(paddedString);
         }
 
         //the last char that is the last chunk
-        int t = codedText.charAt(codedText.length()-1);//ascii code of last char that was the last chunck
-        String tt = Integer.toBinaryString(t);//binary value of the last chunk
+        int lastAsciiDec = codedText.charAt(size-1); //Decimal ascii code of last char (that was the last chunk)
+        String lastAsciiBin = Integer.toBinaryString(lastAsciiDec);//Binary ascii code of last char (that was the last chunk)
 
-        //check 8 length
-        StringBuilder h = new StringBuilder();
-        if (tt.length() < 8){
-            int y = 8 - tt.length();
-            h.append("0".repeat(y));
-            h.append(tt);
-            tt = String.valueOf(h);
-        }
-        tt  = tt.substring(0,diff);//010
-
-        binar[codedText.length() - 1] =tt;
-
-
-
-        StringBuilder binarResult  = new StringBuilder();
-        for (String c: binar){
-            binarResult.append(c);
+        //put zero before at the beginning to reach length 8
+        StringBuilder paddedString = new StringBuilder(lastAsciiBin);
+        while (paddedString.length() < 8) {
+            paddedString.insert(0, '0');
         }
 
-        //now we have th binary decoded value, lets get the original txt
+        //remove extra zeros that were temporarily added in encoding
+        paddedString  = new StringBuilder(paddedString.substring(0, diff));
 
+        //save the last part in array
+        binary8bitChucks[size - 1] = String.valueOf(paddedString);
 
-        System.out.println("Binary Result:"+binarResult);
-
-
+        //get the original binary code
+        StringBuilder binaryResult  = new StringBuilder();
+        for (String c: binary8bitChucks){
+            binaryResult.append(c);
+        }
+        System.out.println("Binary Result:"+binaryResult);
+        return String.valueOf(getOriginalResult(binaryResult, charCodeMap));
+    }
+    private StringBuilder getOriginalResult(StringBuilder binaryResult, Map<Character,String> charCodeMap){
+        //now we have the binaryResult and the charCodeMap, lets get the original text
         StringBuilder result = new StringBuilder();
         String s = "";
-        for (int i = 0; i < binarResult.length(); i++) {
-            s = s.concat(String.valueOf(binarResult.charAt(i)));
-            for (Map.Entry<Character, String> entry : charCodes.entrySet()) {
+        for (int i = 0; i < binaryResult.length(); i++) {
+            s = s.concat(String.valueOf(binaryResult.charAt(i)));
+            for (Map.Entry<Character, String> entry : charCodeMap.entrySet()) {
                 if (s.equals(entry.getValue())) {
                     result.append(entry.getKey());
                     s = "";

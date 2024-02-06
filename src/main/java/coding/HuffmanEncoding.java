@@ -16,7 +16,8 @@ public class HuffmanEncoding {
     private final PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(Node::getFrequency));
 
     public void encode(String data) {
-        Node root = createHuffmanTree(data);
+        fillMap(data);
+        Node root = createHuffmanTree();
         charCodeMap = createCharCodes(root, "", charCodeMap);
         codedText = produceEncodedString();
 
@@ -49,8 +50,7 @@ public class HuffmanEncoding {
         return chunks;
     }
 
-    private Node createHuffmanTree(String data) {
-        fillMap(data);
+    private Node createHuffmanTree() {
         //used to create and then return a 'set' of the same elements that are already present in the HashMap. Because in map case we can't have item.getKey() or item.getVAlue()
         for (var item : charFrequencyMap.entrySet()) {
             queue.add(new Node(item.getKey(), item.getValue()));
