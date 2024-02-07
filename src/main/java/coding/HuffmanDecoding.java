@@ -12,10 +12,19 @@ public class HuffmanDecoding extends Huffman {
     public void decode(String data) {
         String[] split = data.split("[ ]");
         diff  = Integer.parseInt(split[0]);
-        String codedData = split[split.length-1];
 
         //fill charFreqMap according to the beginning of the compressed file
         fillCharFreqMap(split);
+
+
+        StringBuilder codedData = new StringBuilder();
+        for (int i = j; i <split.length; i++) {
+            codedData.append(split[i]);
+        }
+
+
+
+
 
         //create the tree according to the charFreq map
         Node root = createHuffmanTree();
@@ -24,7 +33,7 @@ public class HuffmanDecoding extends Huffman {
         charCodeMap = createCharCodes(root,"",charCodeMap);
 
         //find out the original data by help of charCodeMap
-        String result = String.valueOf(processDecoding(codedData));
+        String result = String.valueOf(processDecoding(codedData.toString()));
 
         System.out.println( "\033[0;1m"+"Decoded text: " + result+"\033[0m");
         //System.out.println("Binary Result:"+binaryResult);

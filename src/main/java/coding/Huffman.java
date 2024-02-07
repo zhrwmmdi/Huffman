@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class Huffman {
+    int j;
     static final Map<Character, Integer> charFreqMap = new HashMap<>();
     static Map<Character, String> charCodeMap = new HashMap<>();
     static Node root;
@@ -35,16 +36,35 @@ public class Huffman {
         }
     }
 
-     void fillCharFreqMap(String[] split){
-        for (int j = 1; j < split.length-1 ; j++) {
-            if (split[j].length()== 0){
-                j++;
-                charFreqMap.put(' ', Integer.valueOf(split[j]));
-            }else {
-                charFreqMap.put(split[j].charAt(0), Integer.valueOf(split[j].substring(1)));
-            }
-        }
-    }
+     void fillCharFreqMap(String[] split) {
+         boolean cont = true;
+             int j = 1;
+             while (cont) {
+                 try {
+                     if (split[j].length() == 0) {
+                         j++;
+                         charFreqMap.put(' ', Integer.valueOf(split[j]));
+                     } else {
+                         charFreqMap.put(split[j].charAt(0), Integer.valueOf(split[j].substring(1)));
+                     }
+                     j++;
+                 } catch (NumberFormatException e) {
+                     cont = false;
+                 }
+             }
+             this.j = j;
+             // j = beginf index of coded text
+
+
+//        for (int j = 1; j < split.length-1 ; j++) {
+//            if (split[j].length()== 0){
+//                j++;
+//                charFreqMap.put(' ', Integer.valueOf(split[j]));
+//            }else {
+//                charFreqMap.put(split[j].charAt(0), Integer.valueOf(split[j].substring(1)));
+//            }
+//        }
+     }
      Map<Character, String> createCharCodes(Node root, String str, Map<Character, String> charCode) {
         if (root == null) return null;
         if (isLeaf(root)) charCode.put(root.getCharacter(), str.length() > 0 ? str : "1");
